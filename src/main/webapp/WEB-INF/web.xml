@@ -64,6 +64,10 @@
             <param-value>2019211001001109</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.chenling.week5.demo.LoginServlet</servlet-class>
+    </servlet>
     <context-param>
         <param-name>driver</param-name>
         <param-value>com.microsoft.sqlserver.jdbc.SQLServerDriver</param-value>
@@ -83,5 +87,9 @@
     <servlet-mapping>
         <servlet-name>ConfigDemoServlet</servlet-name>
         <url-pattern>/config</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/Login</url-pattern>
     </servlet-mapping>
 </web-app>
