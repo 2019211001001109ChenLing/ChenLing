@@ -10,7 +10,7 @@
     username<input type="text" name="username"/><br/>
     password<input type="password" name="password"/><br/>
     Email<input type="text" name="email"/><br/>
-    Gender:<input type="radio" name="gender" value="mail">Male <input type="radio" name="gender" value ="famail">Female<br/>
+    Gender:<input type="radio" name="gender" value="mail">Male <input type="radio" name="gender" value ="female">Female<br/>
     Date of birth:<input type="text name=" name="birthDate"/><br/>
     <input type="submit" value="Register"/>
 </form>
