@@ -7,15 +7,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="header.jsp"%>
+<% User user = (User)session.getAttribute("user");%>
 <h1>User Info</h1>
-<% User user = (User)request.getAttribute("user");%>
 <table border="1px" cellspacing="0" >
     <tr >
-        <td>username: </td>
+        <td>Username: </td>
         <td><%=user.getUsername()%></td>
     </tr>
     <tr>
-        <td>password: </td>
+        <td>Password: </td>
         <td><%=user.getPassword()%></td>
     </tr>
     <tr>
@@ -31,4 +31,5 @@
         <td><%=user.getBirthDate()%></td>
     </tr>
 </table>
-<%@include file="footer.jsp"%>
+<a href="updateUser">Update User
+    <%@include file="footer.jsp"%>

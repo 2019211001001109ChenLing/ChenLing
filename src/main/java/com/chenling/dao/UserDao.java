@@ -12,7 +12,7 @@ import java.util.List;
 public class UserDao implements IUserDao{
     @Override
     public boolean saveUser(Connection con, User user) throws SQLException {
-        String sql = "insert into usertable values(?,?,?,?,?)";
+        String sql = "insert into Usertable values(?,?,?,?,?)";
         try {
             //insert sqlserver；
             PreparedStatement st = con.prepareStatement(sql);
@@ -60,9 +60,8 @@ public class UserDao implements IUserDao{
             p.setString(4, user.getEmail());
             p.setDate(5, new java.sql.Date(user.getBirthDate().getTime()));
             p.setInt(6, user.getId());
-            if(p.executeUpdate() > 0){
-                return 1;
-            }
+
+            return p.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -71,7 +70,7 @@ public class UserDao implements IUserDao{
 
     @Override
     public User findById(Connection con, Integer id) throws SQLException {
-        String sql = "select * from usertable where id=?";
+        String sql = "select * from Usertable where id=?";
         User s = new User();
         try {
             PreparedStatement st = con.prepareStatement(sql);
@@ -96,14 +95,13 @@ public class UserDao implements IUserDao{
 
     @Override
     public User findByUsernamePassword(Connection con, String username, String password) throws SQLException {
-        String sql = "select * from usertable where username=? and password=?";
+        String sql = "select * from Usertable where username=? and password=?";
         User s = null;
         try {
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1,username);
             st.setString(2,password);
             ResultSet sea = st.executeQuery();
-
             if(sea.next()){
                 s = new User();
                 s.setId(sea.getInt("id"));
@@ -123,7 +121,7 @@ public class UserDao implements IUserDao{
     @Override
     public List<User> findByUsername(Connection con, String username) throws SQLException {
         List<User> retList = new ArrayList<User>();
-        String sql = "select * from usertable where username = ?";
+        String sql = "select * from Usertable where username = ?";
         try {
 
             PreparedStatement st = con.prepareStatement(sql);
@@ -150,7 +148,7 @@ public class UserDao implements IUserDao{
     @Override
     public List<User> findByPassword(Connection con, String password) throws SQLException {
         List<User> retList = new ArrayList<User>();
-        String sql = "select * from usertable where password = ?";
+        String sql = "select * from Usertable where password = ?";
         try {
 
             PreparedStatement st = con.prepareStatement(sql);
@@ -177,7 +175,7 @@ public class UserDao implements IUserDao{
     @Override
     public List<User> findByEmail(Connection con, String email) throws SQLException {
         List<User> retList = new ArrayList<User>();
-        String sql = "select * from usertable where email = ?";
+        String sql = "select * from Usertable where email = ?";
         try {
 
             PreparedStatement st = con.prepareStatement(sql);
@@ -204,7 +202,7 @@ public class UserDao implements IUserDao{
     @Override
     public List<User> findByGender(Connection con, String gender) throws SQLException {
         List<User> retList = new ArrayList<User>();
-        String sql = "select * from usertable where gender = ?";
+        String sql = "select * from Usertable where gender = ?";
         try {
 
             PreparedStatement st = con.prepareStatement(sql);
@@ -231,7 +229,7 @@ public class UserDao implements IUserDao{
     @Override
     public List<User> findByBirthdate(Connection con, Date birthDate) throws SQLException {
         List<User> retList = new ArrayList<User>();
-        String sql = "select * from usertable where birthdate = ?";
+        String sql = "select * from Usertable where birthdate = ?";
 
         try {
 
@@ -259,7 +257,7 @@ public class UserDao implements IUserDao{
     @Override
     public List<User> findAllUser(Connection con) throws SQLException {
         List<User> retList = new ArrayList<User>();
-        String sqlSearch = "select * from usertable";
+        String sqlSearch = "select * from Usertable";
         try {
             PreparedStatement stml = con.prepareStatement(sqlSearch);
             ResultSet sea = stml.executeQuery();
