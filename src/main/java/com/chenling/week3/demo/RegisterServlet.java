@@ -14,10 +14,10 @@ public class RegisterServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {//link sqlserver
         super.init();
-    /*    String driver = getServletConfig().getServletContext().getInitParameter("driver");
+/*        String driver = getServletConfig().getServletContext().getInitParameter("driver");
         String url = getServletConfig().getServletContext().getInitParameter("url");
-        String username = getServletConfig().getServletContext().getInitParameter("username");
-        String password = getServletConfig().getServletContext().getInitParameter("password");
+        String username = getServletConfig().getServletContext().getInitParameter("Username");
+        String password = getServletConfig().getServletContext().getInitParameter("Password");
         try {
             Class.forName(driver);
             con = DriverManager.getConnection(url,username,password);
@@ -25,12 +25,13 @@ public class RegisterServlet extends HttpServlet {
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("error");
             e.printStackTrace();
-        }
-     */
+        }*/
+
+        //week6
         con = (Connection) getServletContext().getAttribute("con");
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.getRequestDispatcher("WEB-INF/views/register.jsp").forward(request,response);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class RegisterServlet extends HttpServlet {
         writer.println("<br>birthDate: " + birthDate);
         writer.close();*/
         //insert userTable
-        String sql = "insert into usertable values(?,?,?,?,?)";
+        String sql = "insert into Usertable values(?,?,?,?,?)";
         try {
             //insert sqlserver；
             PreparedStatement st = con.prepareStatement(sql);
@@ -67,7 +68,39 @@ public class RegisterServlet extends HttpServlet {
             e.printStackTrace();
         }
         //send to login.jsp
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("login");
+        //week4-HW
+//        List<User> retList = new ArrayList<User>();
+//        String sqlSearch = "select * from Usertable";
+//        try {
+//            PreparedStatement stml = con.prepareStatement(sqlSearch);
+//            ResultSet sea = stml.executeQuery();
+//            while(sea.next()){
+//                User s = new User();
+//                s.setUsername(sea.getString("username"));
+//                s.setPassword(sea.getString("password"));
+//                s.setEmail(sea.getString("email"));
+//                s.setGender(sea.getString("gender"));
+//                s.setBirthDate(sea.getString("birthdate"));
+//
+//                retList.add(s);
+//            }
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        PrintWriter writer = response.getWriter();
+//        writer.println("<table border = \"1\"> <tr> <td>username</td> <td>password</td> <td>email</td>  " +
+//                "<td>gender</td> <td>birthDate</td> </tr>");
+//        for(User s: retList){
+//            writer.println("<tr>" + "<td>" + s.getUsername() + "</td> ");
+//            writer.println("<td>" + s.getPassword() + "</td> ");
+//            writer.println("<td>" + s.getEmail() + "</td> ");
+//            writer.println("<td>" + s.getGender() + "</td> ");
+//            writer.println("<td>" + s.getBirthDate() + "</td> </tr> ");
+//        }
+//        writer.println("</table> ");
+//        writer.close();
     }
     public void destroy(){
         super.destroy();
