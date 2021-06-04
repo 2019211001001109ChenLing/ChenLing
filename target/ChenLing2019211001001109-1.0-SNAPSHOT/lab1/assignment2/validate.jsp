@@ -22,7 +22,6 @@ if(request.getParameter("username").equals("admin") && request.getParameter("pas
     request.getRequestDispatcher("login.jsp").include(request,response);
 }
 --%>
-
 <%--todo 2: use c:choose ,c:when c:otherwise to validate username is 'admin' and  password is 'admin'--%>
 
 <c:choose>

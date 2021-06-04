@@ -26,4 +26,5 @@ public class Person {
     public void setDog(Dog dog) {
         this.dog = dog;
     }
+
 }
