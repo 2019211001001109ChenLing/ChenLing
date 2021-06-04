@@ -4,9 +4,11 @@ import com.chenling.dao.ProductDao;
 import com.chenling.model.Category;
 import com.chenling.model.Product;
 
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -17,29 +19,37 @@ import java.util.List;
 @MultipartConfig(maxFileSize = 16177215)
 public class AddProductServlet extends HttpServlet {
     Connection con = null;
-    public void init(){
-        con = (Connection) getServletContext().getAttribute("con");
-    }
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Category> productList = Category.findAllCategory(con);
-        request.setAttribute("productList",productList);
-        String path = "/WEB-INF/views/admin/addProduct.jsp";
-        request.getRequestDispatcher(path).forward(request,response);
+    public void init(){
+
+        con = (Connection)getServletContext().getAttribute("con");
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        List<Category> categoryList = Category.findAllCategory(con);
+        request.setAttribute("categoryList",categoryList);
+        String path = "/WEB-INF/views/admin/addProduct.jsp";
+        request.getRequestDispatcher(path).forward(request,response);
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String productName = request.getParameter("productName");
-        Double price = request.getParameter("price")!=null? Double.parseDouble(request.getParameter("price")) :0.0;
-        int categoryId = request.getParameter("categoryId")!=null? Integer.parseInt(request.getParameter("categoryId")) :0;
+        double price =request.getParameter("price")!= null?Double.parseDouble(request.getParameter("price")):0.0;
+        int categoryId = request.getParameter("categoryId")!=null?Integer.parseInt(request.getParameter("categoryId")):8;
         String productDescription = request.getParameter("productDescription");
-        Part filePart = request.getPart("picture");
+
         InputStream inputStream = null;
-        if(filePart != null){
-            System.out.println("fill name:" + filePart.getName() + "size:" + filePart.getSize() + "fill type:" + filePart.getContentType());
-            inputStream = filePart.getInputStream();
-        }
+        //Part fileParts = request.getPart("picture");
+        //if(fileParts!=null){
+           // inputStream = fileParts.getInputStream();
+
+        //}
         Product product = new Product();
         product.setProductName(productName);
         product.setProductDescription(productDescription);
@@ -48,14 +58,13 @@ public class AddProductServlet extends HttpServlet {
         product.setCategoryId(categoryId);
 
         ProductDao productDao = new ProductDao();
-        int n = 0;
         try {
-            n = productDao.save(product,con);
+            productDao.save(product,con);
+            if(1>0)
+                response.sendRedirect("productList");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        if(n>0){
-            response.sendRedirect("productList");
-        }
+
     }
 }
