@@ -76,35 +76,36 @@
 				<tbody>
 
 				<!-- loop_start -->
+				<c:forEach var="o" items="${orderList}">
 
-				<tr>
-					<td>OID:order Id</td>
-					<td>order Date</td>
-					<%
-						com.chenling.model.Order o=(com.chenling.model.Order)pageContext.findAttribute("o");
-						int userId=o.getCustomerId();
-						java.sql.Connection con=(java.sql.Connection)application.getAttribute("con");
-						com.chenling.dao.UserDao userDao=new com.chenling.dao.UserDao();
-						String customerName=userDao.findById(con, userId).getUsername();
-					%>
-					<td><%=customerName %></td>
-					<td>
-						<p>first Name last Name<p>
-						<p> address1</p>
-						<p>address2</p>
-						<p>city,state,country-postalCode</p><p>phone</p></td>
-					<td class="cart_total">
+
+					<tr>
+						<td>OID:${o.orderId}</td>
+						<td>${o.orderDate}</td>
 						<%
-							int n=o.getPaymentId();
-							String paymentType=com.chenling.model.Payment.findByPaymentId(con,n);
+							com.chenling.model.Order o=(com.chenling.model.Order)pageContext.findAttribute("o");
+							int userId=o.getCustomerId();
+							java.sql.Connection con=(java.sql.Connection)application.getAttribute("con");
+							com.chenling.dao.UserDao userDao=new com.chenling.dao.UserDao();
+							String customerName=userDao.findById(con, userId).getUsername();
 						%>
-						<p class="cart_total_price"><%=paymentType %></p>
-					</td>
-					<td><button class="btn btn-default update" id="${o.orderId }">Details</button></td>
-				</tr>
-				<tr>
-
-					<!-- loop_end -->
+						<td><%=customerName %></td>
+						<td>
+							<p>${o.firstName} ${o.lastName}<p>
+							<p>${o.address1}</p>
+							<p>${o.address2}</p>
+							<p>${o.city},${o.state},${o.country},${o.postalCode}</p><p>${o.phone}</p></td>
+						<td class="cart_total">
+							<%
+								int n=o.getPaymentId();
+								String paymentType=com.chenling.model.Payment.findByPaymentId(con,n);
+							%>
+							<p class="cart_total_price"><%=paymentType %></p>
+						</td>
+						<td><button class="btn btn-default update" id="${o.orderId }">Details</button></td>
+					</tr>
+				</c:forEach>
+				<!-- loop_end -->
 
 				</tbody>
 			</table>
@@ -148,9 +149,9 @@
 	-moz-box-shadow: 0 0 5px #ff0000;
 	-webkit-box-shadow: 0 0 5px #ff0000;
 	box-shadow: 0 0 5px #ff0000;      }
-    #container {     background: #FFFFFF; /*Sample*/ overflow-y:auto;    width:100%;     height:100%; }
-    a{   cursor: pointer;   text-decoration:none;   }   /* This is for the positioning of the Close Link */
-    #popupBoxClose {     font-size:15px;       line-height:15px;       right:5px;       top:5px;       position:absolute;       color:#6fa5e2;       font-weight:500;       }
+#container {     background: #FFFFFF; /*Sample*/ overflow-y:auto;    width:100%;     height:100%; }
+a{   cursor: pointer;   text-decoration:none;   }   /* This is for the positioning of the Close Link */
+#popupBoxClose {     font-size:15px;       line-height:15px;       right:5px;       top:5px;       position:absolute;       color:#6fa5e2;       font-weight:500;       }
 </style>
 
 <%@include file="../footer.jsp" %>
